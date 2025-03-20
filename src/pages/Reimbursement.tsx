@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Claims from '../components/core/Claims';
 import { claimsData, colorPallete } from '../constants/claimsData';
 import SearchBar from '../components/core/SearchBar';
+import NoDataFound from '../components/core/NoData';
 const Reimbursement = () => {
     const [searchValue,setSearchValue] = useState('');
     const [claims, setClaims] = useState(() => {
@@ -37,7 +38,7 @@ const Reimbursement = () => {
       <SearchBar value={searchValue} handleChange={handleSearchData}/>
       </View>
       <View className='w-full flex-1 mb-10'>
-      {claims?.length > 0 ? <FlatList data={claims} renderItem={({item})=><Claims data={item} color={randomColor()} symbol={getFirstLetters(item.company)}/>} scrollEnabled className='w-full flex-col gap-4'/>:<Text>NO CLAIMS YET!</Text>}
+      {claims?.length > 0 ? <FlatList data={claims} renderItem={({item})=><Claims data={item} color={randomColor()} symbol={getFirstLetters(item.company)}/>} scrollEnabled className='w-full flex-col gap-4'/>:<NoDataFound/>}
       </View>
         </View>
         <TouchableOpacity className="absolute bottom-28 right-8 w-16 h-16 bg-blue-500 border border-blue-500 rounded-full items-center justify-center">
