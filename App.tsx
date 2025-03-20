@@ -1,12 +1,14 @@
-import { SafeAreaView, Text, View } from 'react-native';
+import { FlatList, SafeAreaView, Text, View } from 'react-native';
 import React from 'react';
 import './global.css';
+import Claims from './src/components/core/Claims';
 const App = () => {
+
+const data=[{company:"amazon",status:"approved",currency:"INR",amount:600},{company:"amazon",status:"approved",currency:"INR",amount:600}];
+
   return (
-    <SafeAreaView className="flex-1 items-center justify-center">
-    <View>
-      <Text className='text-2xl font-bold'>App</Text>
-    </View>
+    <SafeAreaView >
+    <FlatList data={data} renderItem={({item})=><Claims data={item} />} className='w-full h-fit flex-col gap-4'/>
     </SafeAreaView>
   );
 };
