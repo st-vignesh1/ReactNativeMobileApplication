@@ -19,6 +19,15 @@ const Reimbursement = () => {
         const index=Math.floor(Math.random()*colorPallete.length);
          return `bg-[rgb(${colorPallete[index]})]`;
     }
+    function getFirstLetters(input) {
+        const words = input.trim().split(/\s+/); 
+        if (words.length < 2) {
+            return words[0][0];
+        }
+        const firstLetter1 = words[0][0];
+        const firstLetter2 = words[1][0];
+        return firstLetter1 + firstLetter2;
+    }
 
   return (
     <SafeAreaView>
@@ -27,7 +36,9 @@ const Reimbursement = () => {
       <View className="pl-4 pr-4 mb-8">
       <SearchBar value={searchValue} handleChange={handleSearchData}/>
       </View>
-      {claims?.length > 0 ? <FlatList data={claims} renderItem={({item})=><Claims data={item} color={randomColor()}/>} className='w-full h-fit flex-col gap-4'/>:<Text>NO CLAIMS YET!</Text>}
+      <View className='w-full flex-1 mb-10'>
+      {claims?.length > 0 ? <FlatList data={claims} renderItem={({item})=><Claims data={item} color={randomColor()} symbol={getFirstLetters(item.company)}/>} scrollEnabled className='w-full flex-col gap-4'/>:<Text>NO CLAIMS YET!</Text>}
+      </View>
         </View>
         <TouchableOpacity className="absolute bottom-28 right-8 w-16 h-16 bg-blue-500 border border-blue-500 rounded-full items-center justify-center">
          <Text className='text-2xl text-white font-semibold'>+</Text>
