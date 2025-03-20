@@ -1,7 +1,7 @@
 import { View, Text, SafeAreaView, FlatList, TouchableOpacity} from 'react-native';
 import React, { useState } from 'react';
 import Claims from '../components/core/Claims';
-import { claimsData } from '../constants/claimsData';
+import { claimsData, colorPallete } from '../constants/claimsData';
 import SearchBar from '../components/core/SearchBar';
 const Reimbursement = () => {
     const [searchValue,setSearchValue] = useState('');
@@ -15,6 +15,10 @@ const Reimbursement = () => {
             setClaims(claimsData.filter(claim=>claim.company.startsWith(value.toLowerCase())));
         }
     }
+    function randomColor(){
+        const index=Math.floor(Math.random()*colorPallete.length);
+         return `bg-[rgb(${colorPallete[index]})]`;
+    }
 
   return (
     <SafeAreaView>
@@ -23,7 +27,7 @@ const Reimbursement = () => {
       <View className="pl-4 pr-4 mb-8">
       <SearchBar value={searchValue} handleChange={handleSearchData}/>
       </View>
-      {claims?.length > 0 ? <FlatList data={claims} renderItem={({item})=><Claims data={item} />} className='w-full h-fit flex-col gap-4'/>:<Text>NO CLAIMS YET!</Text>}
+      {claims?.length > 0 ? <FlatList data={claims} renderItem={({item})=><Claims data={item} color={randomColor()}/>} className='w-full h-fit flex-col gap-4'/>:<Text>NO CLAIMS YET!</Text>}
         </View>
         <TouchableOpacity className="absolute bottom-28 right-8 w-16 h-16 bg-blue-500 border border-blue-500 rounded-full items-center justify-center">
          <Text className='text-2xl text-white font-semibold'>+</Text>
