@@ -1,8 +1,12 @@
-import { View, Text, Button, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import React from 'react';
+import React, { useState } from 'react';
+import DropDown from '../components/core/DropDown';
+import { merchants } from '../constants/claimsData';
+
 
 const CreateClaim = () => {
+  const [selectedValue,setSelectedValue]=useState(null)
   const handleLaunchCamera = () => {
     launchCamera(
       {
@@ -42,16 +46,18 @@ function handleLaunchImageLibrary()
             console.log('File Name:', asset.fileName);
           }
       } )
+      
 }  return (
     <SafeAreaView>
       <View className="w-full min-h-screen p-8">
-      <Text className='mb-4 font-semibold'>Receipt(s)</Text>
+      <Text className='mb-4 font-semibold text-xl'>Receipt(s)</Text>
       <View className='bg-gray-100 w-full h-36 rounded-md border border-dashed border-gray-300 mb-4'>
       <TouchableOpacity className='w-full flex justify-center items-center h-full'>
         <Text onPress={handleLaunchImageLibrary} className='capitalize text-blue-700 underline mb-1'>Upload Receipt</Text>
         <Text className='text-gray-600'>PNG,JPG,PDF upto 5 MB</Text>
       </TouchableOpacity>
       </View>
+      <DropDown data={merchants} selectedValue={selectedValue} setSelectedValue={setSelectedValue}/>
       </View>
     </SafeAreaView>
   );

@@ -5,7 +5,6 @@
 
     <key>NSPhotoLibraryUsageDescription</key>
     <string>This app requires access to your photo library to select images or videos.</string>
-
     <key>NSCameraUsageDescription</key>
     <string>This app requires access to the camera to capture images and record videos.</string>
 	<key>CFBundleDevelopmentRegion</key>
