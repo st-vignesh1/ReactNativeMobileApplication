@@ -1,7 +1,6 @@
 import { View, Text,Image } from 'react-native';
 import React from 'react';
-
-
+import {EmptyScreen} from "../../../assets/emptyScreen.svg"
 
 const NoDataFound = () => {
   return (
@@ -10,6 +9,7 @@ const NoDataFound = () => {
         source={require("../../../assets/nodata.jpg")}
         className="w-96 h-96 mb-4"
       />
+      {/* <EmptyScreen className="w-96 h-96 mb-4"/> */}
       <Text className='text-2xl font-extrabold'>NO DATA FOUND!</Text>
     </View>
   )

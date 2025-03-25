@@ -1,9 +1,5 @@
 export const claimsData=[
-    {company:"nivida",status:"pending",currency:"USD",amount:870},
-    {company:"Shell Gas Station",status:"approved",currency:"USD",amount:800},
-    {company:"Shell Gas Station",status:"approved",currency:"USD",amount:800},
-    {company:"Shell Gas Station",status:"approved",currency:"USD",amount:800},
-    {company:"Shell Gas Station",status:"approved",currency:"USD",amount:800},
+    {company:"nvidia",status:"pending",currency:"USD",amount:870},
     {company:"Shell Gas Station",status:"approved",currency:"USD",amount:800},
     {company:"apple",status:"approved",currency:"USD",amount:600},
     {company:"amazon",status:"approval pending",currency:"INR",amount:1200},
