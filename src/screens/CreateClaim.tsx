@@ -7,10 +7,9 @@ import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Button from '../components/core/Button';
 import { Image } from 'react-native';
-
-
+import { claimsData } from '../constants/claimsData';
 const CreateClaim = () => {
-  const [uri,setUri] = useState(null)
+  const [uri,setUri] = useState("")
   const [selectedMerchantValue,setSelectedMerchantValue]=useState(null);
   const [selectedCurrencyValue,setSelectedCurrencyValue]=useState(null);
   const [amount,setAmount]=useState();
@@ -65,7 +64,29 @@ function handleLaunchImageLibrary()
           }
       } )
 } 
-console.log(uri);
+
+function handleCreateClaim(){
+  if(selectedMerchantValue && selectedCurrencyValue){
+    claimsData.unshift({
+      company:selectedMerchantValue,
+      status:"approval pending",
+      currency:selectedCurrencyValue,
+    }) 
+  handleCancel();
+  }
+}
+
+function handledraft(){
+if(selectedMerchantValue || selectedCurrencyValue){
+  claimsData.unshift({
+    company:selectedMerchantValue || "Unknown",
+    status:"draft",
+    currency:selectedCurrencyValue || "Not Updated",
+    amount:amount || 0
+  }) 
+handleCancel();
+}
+}
 return (
     <SafeAreaView className='flex-1'>
       <View className="w-full min-h-screen p-8">
@@ -82,11 +103,11 @@ return (
 
       </View>
       <DropDown data={merchants} selectedValue={selectedMerchantValue} setSelectedValue={setSelectedMerchantValue} dropDownName="Merchant"/>
-      <DropDown data={currency} selectedValue={selectedCurrencyValue} setSelectedValue={setSelectedCurrencyValue} dropDownName="Currency"/>
-      </View>
+      <DropDown data={currency} selectedValue={selectedCurrencyValue} setSelectedValue={setSelectedCurrencyValue} dropDownName="Currency"/>  
+    </View>
       <View className='bg-white w-full h-28 absolute bottom-0 flex-row items-center justify-around p-4 ' >
-        {uri || selectedMerchantValue || selectedCurrencyValue ?<Button styles='bg-transparent  text-gray-400 border border-gray-400'>Save as draft</Button>:<Button styles='bg-transparent  text-gray-400 border border-gray-400' handlePress={handleCancel}>Cancel</Button>}
-        <Button styles=' text-white border border-blue-600  bg-blue-600'>Create Claim</Button>
+        {selectedMerchantValue || selectedCurrencyValue ?<Button styles='bg-transparent  text-gray-400 border border-gray-400' handlePress={handledraft}>Save as draft</Button>:<Button styles='bg-transparent  text-gray-400 border border-gray-400' handlePress={handleCancel}>Cancel</Button>}
+        <Button styles=' text-white border border-blue-600  bg-blue-600' handlePress={handleCreateClaim}>Create Claim</Button>
       </View >
     </SafeAreaView>
   );

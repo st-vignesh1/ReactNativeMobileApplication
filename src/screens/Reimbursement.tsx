@@ -25,6 +25,7 @@ const Reimbursement = () => {
          return `bg-[rgb(${colorPallete[index]})]`;
     }
     function getFirstLetters(input) {
+      console.log("Input:",input)
         const words = input.trim().split(/\s+/);
         if (words.length < 2) {
             return words[0][0];
@@ -36,7 +37,7 @@ const Reimbursement = () => {
     function handleNavigation(){
       navigation.navigate('CreateClaim');
     }
-
+console.log(claims)
   return (
     <SafeAreaView className='flex-1'>
         <View className="w-full min-h-screen p-4">
