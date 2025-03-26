@@ -6,8 +6,8 @@ import AppNavigator from './src/routes/AppNavigator';
 
 const App = () => {
   return (
-      <GestureHandlerRootView className="flex-1">
-    <SafeAreaView className="flex-1" >
+      <GestureHandlerRootView>
+    <SafeAreaView   className="flex-1">
      <AppNavigator/>
     </SafeAreaView>
       </GestureHandlerRootView>

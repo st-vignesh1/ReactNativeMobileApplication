@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Reimbursement from '../pages/Reimbursement';
-import CreateClaim from '../pages/CreateClaim';
+import Reimbursement from '../screens/Reimbursement';
+import CreateClaim from '../screens/CreateClaim';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,10 +13,19 @@ const AppNavigator = () => {
         <Stack.Screen
           name="Reimbursement"
           component={Reimbursement}
+          options={{
+            headerShown: false,
+            contentStyle: { backgroundColor: "transparent" },
+          }}
         />
         <Stack.Screen
           name="CreateClaim"
           component={CreateClaim}
+          options={{
+            headerStyle: {
+              backgroundColor: " #f3f4f6", // Set the background color of the header
+            }
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

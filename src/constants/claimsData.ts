@@ -9,6 +9,10 @@ export const claimsData=[
     {company:"netflix",status:"approved",currency:"INR",amount:800},
     {company:"spotify",status:"approved",currency:"IDR",amount:850},
     {company:"Delta Airlines",status:"draft",currency:"AUD",amount:640},
+    {company:"Delta Airlines",status:"draft",currency:"AUD",amount:640},
+    {company:"Delta Airlines",status:"draft",currency:"AUD",amount:640},
+    {company:"Delta Airlines",status:"draft",currency:"AUD",amount:640},
+    {company:"Delta Airlines",status:"draft",currency:"AUD",amount:640},
 ];
 export const colorPallete = [
     "16,24,39",

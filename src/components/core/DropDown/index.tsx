@@ -15,17 +15,18 @@ const DropDown = ({ data, selectedValue ,setSelectedValue, dropDownName}) => {
 
   return (
     <View className="m-5">
+      <Text className='mb-2 text-gray-500 font-medium'>{selectedValue?dropDownName:""}</Text>
       <TouchableOpacity
         className="pb-4 border-b"
         onPress={handleToggleDropDown}
       >
-        <Text className="text-black capitalize text-xl">
+        <Text className="text-black capitalize text-xl font-semibold">
           {selectedValue ? selectedValue : dropDownName}
         </Text>
       </TouchableOpacity>
       {isDropDownVisible && (
         <View className="mt-2 bg-gray-200 rounded-md elevation shadow-white/70 w-full max-h-60">
-          <FlatList
+        { data?.length>0 && <FlatList
             data={data}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
@@ -37,7 +38,7 @@ const DropDown = ({ data, selectedValue ,setSelectedValue, dropDownName}) => {
               </TouchableOpacity>
             )}
             showsVerticalScrollIndicator={false}
-          />
+          />}
         </View>
       )}
     </View>

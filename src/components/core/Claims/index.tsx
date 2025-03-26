@@ -5,8 +5,7 @@ import React from 'react';
 
 
 const Claims = ({data,color,symbol}) => {
-    console.log(color)
-;  return (
+ return (
    <SafeAreaView>
     <View className="w-full h-fit flex-row p-4 justify-between items-center">
     <View className="flex-row items-center gap-4">
