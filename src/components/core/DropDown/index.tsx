@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import React, { useState } from 'react';
 
-const DropDown = ({ data, selectedValue ,setSelectedValue}) => {
+const DropDown = ({ data, selectedValue ,setSelectedValue, dropDownName}) => {
   const [isDropDownVisible, setIsDropDownVisible] = useState(false);
 
   function handleSelectvalue(label){
@@ -20,7 +20,7 @@ const DropDown = ({ data, selectedValue ,setSelectedValue}) => {
         onPress={handleToggleDropDown}
       >
         <Text className="text-black capitalize text-xl">
-          {selectedValue ? selectedValue : 'Merchant'}
+          {selectedValue ? selectedValue : dropDownName}
         </Text>
       </TouchableOpacity>
       {isDropDownVisible && (

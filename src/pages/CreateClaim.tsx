@@ -2,11 +2,12 @@ import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import React, { useState } from 'react';
 import DropDown from '../components/core/DropDown';
-import { merchants } from '../constants/claimsData';
+import { currency, merchants } from '../constants/claimsData';
 
 
 const CreateClaim = () => {
-  const [selectedValue,setSelectedValue]=useState(null)
+  const [selectedMerchantValue,setSelectedMerchantValue]=useState(null)
+  const [selectedCurrencyValue,setSelectedCurrencyValue]=useState(null)
   const handleLaunchCamera = () => {
     launchCamera(
       {
@@ -57,7 +58,8 @@ function handleLaunchImageLibrary()
         <Text className='text-gray-600'>PNG,JPG,PDF upto 5 MB</Text>
       </TouchableOpacity>
       </View>
-      <DropDown data={merchants} selectedValue={selectedValue} setSelectedValue={setSelectedValue}/>
+      <DropDown data={merchants} selectedValue={selectedMerchantValue} setSelectedValue={setSelectedMerchantValue} dropDownName="Merchant"/>
+      <DropDown data={currency} selectedValue={selectedCurrencyValue} setSelectedValue={setSelectedCurrencyValue} dropDownName="Currency"/>
       </View>
     </SafeAreaView>
   );
