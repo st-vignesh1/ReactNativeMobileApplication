@@ -5,9 +5,10 @@ import { claimsData, colorPallete } from '../constants/claimsData';
 import SearchBar from '../components/core/SearchBar';
 import NoDataFound from '../components/core/NoData';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
-import CreateClaim from './CreateClaim';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 const Reimbursement = () => {
+
+
     const [searchValue,setSearchValue] = useState('');
     const [claims, setClaims] = useState(() => {
         return claimsData?.length ? claimsData : [];
@@ -37,7 +38,6 @@ const Reimbursement = () => {
     function handleNavigation(){
       navigation.navigate('CreateClaim');
     }
-console.log(claims)
   return (
     <SafeAreaView className='flex-1'>
         <View className="w-full min-h-screen p-4">

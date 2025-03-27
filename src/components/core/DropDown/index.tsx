@@ -1,21 +1,25 @@
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import React, { useState } from 'react';
+import { ScrollView } from 'react-native-gesture-handler';
 
-const DropDown = ({ data, selectedValue ,setSelectedValue, dropDownName}) => {
+const DropDown = ({ data, selectedValue, setSelectedValue, dropDownName }) => {
+
+  console.log(selectedValue)
   const [isDropDownVisible, setIsDropDownVisible] = useState(false);
 
-  function handleSelectvalue(label){
-    const selected=data.filter(item=>item.label===label);
-    if(selected) setSelectedValue(selected[0].value)
-        setIsDropDownVisible(false);
-    }
+  function handleSelectValue(label) {
+    const selected = data.find((item) => item.label === label);
+    if (selected) setSelectedValue(selected.label);
+    setIsDropDownVisible(false);
+  }
+
   function handleToggleDropDown() {
     setIsDropDownVisible(!isDropDownVisible);
   }
 
   return (
     <View className="m-5">
-      <Text className='mb-2 text-gray-500 font-medium'>{selectedValue?dropDownName:""}</Text>
+      <Text className="mb-2 text-gray-500 font-medium">{selectedValue ? dropDownName : ''}</Text>
       <TouchableOpacity
         className="pb-4 border-b"
         onPress={handleToggleDropDown}
@@ -25,20 +29,21 @@ const DropDown = ({ data, selectedValue ,setSelectedValue, dropDownName}) => {
         </Text>
       </TouchableOpacity>
       {isDropDownVisible && (
-        <View className="mt-2 bg-gray-200 rounded-md elevation shadow-white/70 w-full max-h-60">
-        { data?.length>0 && <FlatList
-            data={data}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => (
+        <View className="mt-2 bg-gray-200 rounded-md elevation shadow-white/70 w-full min-h-fit">
+          {data?.length > 0 && (
+            <View>
+            {data.map((item, index) =>
               <TouchableOpacity
-              onPress={()=>handleSelectvalue(item.label)}
+                key={index.toString()}
+                onPress={() => handleSelectValue(item.label)}
                 className="p-4 border-b border-gray-300"
               >
-                <Text className="text-base" >{item.label}</Text>
+                <Text className="text-base">{item.label}</Text>
               </TouchableOpacity>
             )}
-            showsVerticalScrollIndicator={false}
-          />}
+          </View>
+          
+          )}
         </View>
       )}
     </View>
