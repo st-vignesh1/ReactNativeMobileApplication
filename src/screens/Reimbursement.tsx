@@ -49,8 +49,8 @@ const Reimbursement = () => {
       {claims?.length > 0 ? <FlatList data={claims} renderItem={({item})=><Claims data={item} color={randomColor()} symbol={getFirstLetters(item.company)}/>} scrollEnabled className='w-full flex-col gap-4 flex-1'/>:<NoDataFound/>}
       </View>
         </View>
-        <TouchableOpacity className="absolute bottom-20 right-8 w-16 h-16 bg-blue-500 border border-blue-500 rounded-full items-center justify-center" onPress={handleNavigation}>
-         <Text className='text-2xl text-white font-semibold'>+</Text>
+        <TouchableOpacity className="absolute bottom-14 right-8 w-16 h-16 bg-blue-700 border border-blue-700 rounded-2xl items-center justify-center" onPress={handleNavigation}>
+         <Text className='text-3xl text-white font-semibold'>+</Text>
         </TouchableOpacity>
     </SafeAreaView>
   );

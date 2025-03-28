@@ -8,31 +8,39 @@ import {
   TextInput,
   Image,
 } from 'react-native';
-import { launchImageLibrary } from 'react-native-image-picker';
+import { launchImageLibrary, Asset } from 'react-native-image-picker';
 import DropDown from '../components/core/DropDown';
 import { claimsData, currency, merchants } from '../constants/claimsData';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Button from '../components/core/Button';
-import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 
-const CreateClaim = () => {
+export interface Claim {
+  company: string;
+  status: string;
+  currency: string;
+  amount: number;
+  date?: Date;
+  receipt?: string[];
+}
+const CreateClaim: React.FC = () => {
   const [imageUris, setImageUris] = useState<string[]>([]);
-  const [selectedMerchantValue, setSelectedMerchantValue] = useState(null);
-  const [selectedCurrencyValue, setSelectedCurrencyValue] = useState(null);
-  const [amount, setAmount] = useState('');
+  const [selectedMerchantValue, setSelectedMerchantValue] = useState<string | null>(null);
+  const [selectedCurrencyValue, setSelectedCurrencyValue] = useState<string | null>(null);
+  const [amount, setAmount] = useState<string>('');
   const [transactionDate, setTransactionDate] = useState<Date | null>(null);
-  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
-  const handleDateChange = (event, selectedDate) => {
+  const handleDateChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
     setShowDatePicker(false);
     if (selectedDate) {
       setTransactionDate(selectedDate);
     }
   };
 
-  const handleAmount = (text) => {
+  const handleAmount = (text: string) => {
     const numericValue = text.replace(/[^0-9]/g, '');
     setAmount(numericValue);
   };
@@ -51,11 +59,11 @@ const CreateClaim = () => {
         } else if (response.errorCode) {
           console.log('Error Code:', response.errorCode);
         } else if (response.assets) {
-          const asset = response.assets[0];
-          if (imageUris.length < 2) {
-            setImageUris([...imageUris, asset.uri]);
-          } else {
-            console.log('Maximum 2 photos allowed');
+          const asset: Asset = response.assets[0];
+          if (asset.uri && imageUris.length < 5) {
+            setImageUris([asset.uri,...imageUris ]);
+          }  else {
+            console.log('Maximum 5 photos allowed');
           }
         }
       }
@@ -73,22 +81,21 @@ const CreateClaim = () => {
         company: selectedMerchantValue,
         status: 'approval pending',
         currency: selectedCurrencyValue,
-        amount,
-        Date: transactionDate,
-        receipt:imageUris,
+        amount: Number(amount),
+        date: transactionDate,
+        receipt: imageUris,
       });
       navigation.navigate('Reimbursement');
     }
   };
 
   const handleDraft = () => {
-    if (selectedMerchantValue || selectedCurrencyValue || amount) {
+    if (selectedMerchantValue || selectedCurrencyValue || amount || transactionDate) {
       claimsData.unshift({
         company: selectedMerchantValue || 'Unknown',
         status: 'draft',
         currency: selectedCurrencyValue || 'Not Updated',
         amount: Number(amount) || 0,
-    
       });
       navigation.navigate('Reimbursement');
     }
@@ -99,13 +106,19 @@ const CreateClaim = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1  bg-white">
       <ScrollView className="flex-1" nestedScrollEnabled>
-        <View className="w-full min-h-fit p-8">
-          <Text className="mb-4 font-semibold text-xl">Receipt(s)</Text>
-          <View className="bg-gray-100 w-full h-40 rounded-md border border-dashed border-gray-300 mb-4 p-4 flex ">
-            {imageUris.length > 0 ? (
-              <View className="w-full flex-row h-full items-center gap-4">
+        <View className="w-full min-h-fit p-6">
+          <Text className="mb-4 mt-10 font-semibold text-xl text-gray-600">Receipt(s)</Text>
+          <View className="bg-gray-100 w-full h-40 p-2 rounded-md border border-dashed border-gray-300 mb-4 flex overflow-x-scroll">
+            {imageUris.length >0 ? (
+              <ScrollView className="w-full" horizontal={true} contentContainerStyle={{justifyContent:'center',alignItems:"center",gap:10}}>
+                 { imageUris?.length<5 && <TouchableOpacity
+                    onPress={handleLaunchImageLibrary}
+                    className="w-12 h-12 bg-blue-500 border border-blue-500 rounded-full items-center justify-center"
+                  >
+                    <Text className="font-bold text-4xl text-white">+</Text>
+                  </TouchableOpacity>}
                 {imageUris.map((uri, index) => (
                   <Image
                     key={index}
@@ -113,15 +126,7 @@ const CreateClaim = () => {
                     className="w-40 h-full rounded-md"
                   />
                 ))}
-                {imageUris.length<2 &&  <TouchableOpacity
-                onPress={handleLaunchImageLibrary}
-                className='w-12 h-12 bg-blue-500 border border-blue-500 rounded-full items-center justify-center'
-              >
-                <Text className='font-bold text-4xl text-white'>
-              +
-                </Text>
-              </TouchableOpacity>}
-              </View>
+              </ScrollView>
             ) : (
               <TouchableOpacity
                 onPress={handleLaunchImageLibrary}
@@ -146,12 +151,12 @@ const CreateClaim = () => {
             setSelectedValue={setSelectedCurrencyValue}
             dropDownName="Currency"
           />
-          <View className="p-6">
+          <View className="mt-8 m-2 mb-5">
             <Text
               className={`${
                 amount
-                  ? 'mb-2 text-gray-500 font-medium'
-                  : 'font-semibold text-xl '
+                  ? 'text-gray-500 font-medium'
+                  : 'font-semibold text-xl text-gray-600 '
               }`}
             >
               Amount
@@ -160,24 +165,24 @@ const CreateClaim = () => {
               keyboardType="numeric"
               value={amount}
               onChangeText={handleAmount}
-              className="border-b pb-4 text-xl font-semibold"
+              className="border-b border-b-gray-300 pb-4 text-xl font-semibold text-gray-600 "
             />
           </View>
-          <View className="p-6">
+          <View className="mt-3 m-2 mt-8">
             <Text
-              className={`mb-4 ${
+              className={` ${
                 transactionDate
-                  ? 'mb-2 text-gray-500 font-medium'
-                  : 'font-semibold text-xl '
+                  ? 'mb-4 text-gray-500 font-medium'
+                  : 'font-semibold text-xl  text-gray-600 '
               }`}
             >
               Transaction Date
             </Text>
             <TouchableOpacity onPress={() => setShowDatePicker(true)}>
-              <Text className="border-b w-full pb-4 text-xl font-semibold">
+              <Text className="border-b border-b-gray-300 w-full  text-gray-600  text-xl font-semibold">
                 {transactionDate
                   ? transactionDate.toLocaleDateString()
-                  : 'Select date'}
+                  : ''}
               </Text>
             </TouchableOpacity>
             {showDatePicker && (
@@ -191,7 +196,7 @@ const CreateClaim = () => {
           </View>
         </View>
       </ScrollView>
-      <View className="bg-white w-full h-28 bottom-0 flex-row items-center justify-around p-4">
+      <View className="bg-white w-full h-24 bottom-0 flex-row items-center justify-around p-4 ">
         {selectedMerchantValue || selectedCurrencyValue || amount || transactionDate ? (
           <Button
             styles="bg-transparent  text-gray-400 border border-gray-400"
@@ -201,7 +206,7 @@ const CreateClaim = () => {
           </Button>
         ) : (
           <Button
-            styles="bg-transparent  text-gray-400 border border-gray-400"
+            styles="bg-transparent  text-gray-500 border border-gray-400"
             handlePress={handleCancel}
           >
             Cancel
@@ -210,6 +215,9 @@ const CreateClaim = () => {
         <Button
           styles=" text-white border border-blue-600  bg-blue-600"
           handlePress={handleCreateClaim}
+          disabled={
+            !selectedMerchantValue || !selectedCurrencyValue || !amount || !transactionDate
+          }
         >
           Create Claim
         </Button>

@@ -18,13 +18,13 @@ const DropDown = ({ data, selectedValue, setSelectedValue, dropDownName }) => {
   }
 
   return (
-    <View className="m-5">
+    <View className="mb-5 m-2">
       <Text className="mb-2 text-gray-500 font-medium">{selectedValue ? dropDownName : ''}</Text>
       <TouchableOpacity
-        className="pb-4 border-b"
+        className="pb-4 border-b border-b-gray-300"
         onPress={handleToggleDropDown}
       >
-        <Text className="text-black capitalize text-xl font-semibold">
+        <Text className="text-gray-600 capitalize text-xl font-semibold">
           {selectedValue ? selectedValue : dropDownName}
         </Text>
       </TouchableOpacity>
