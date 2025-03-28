@@ -19,7 +19,7 @@ const Reimbursement = () => {
         if(!value) {setClaims(claimsData);}
         else{
 
-            setClaims(claimsData.filter(claim=>claim.company.startsWith(value.toLowerCase())));
+            setClaims(claimsData?.filter(claim=>claim.company.startsWith(value.toLowerCase())));
         }
     }
     function randomColor(){
