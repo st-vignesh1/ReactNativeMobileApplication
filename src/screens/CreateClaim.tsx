@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
 import {
   View,
-  Text,
   SafeAreaView,
-  TouchableOpacity,
   ScrollView,
-  TextInput,
-
 } from 'react-native';
 import { launchImageLibrary, Asset } from 'react-native-image-picker';
 import DropDown from '../components/core/DropDown';
 import { claimsData, currency, merchants } from '../constants/claimsData';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import Button from '../components/core/Button';
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import Receipt from '../components/Receipt';
+import ClaimAmountInput from '../components/ClaimAmountInput';
+import ClaimTransactionDate from '../components/ClaimTransactionDate';
+import CreateClaimFooter from '../components/CreateClaimFooter';
 
 export interface Claim {
   company: string;
@@ -123,77 +121,11 @@ const CreateClaim: React.FC = () => {
             setSelectedValue={setSelectedCurrencyValue}
             dropDownName="Currency"
           />
-          <View className="mt-8 m-2 mb-5">
-            <Text
-              className={`${
-                amount
-                  ? 'text-gray-500 font-medium'
-                  : 'font-semibold text-xl text-gray-600 '
-              }`}
-            >
-              Amount
-            </Text>
-            <TextInput
-              keyboardType="numeric"
-              value={amount}
-              onChangeText={handleAmount}
-              className="border-b border-b-gray-300 pb-4 text-xl font-semibold text-gray-600 "
-            />
-          </View>
-          <View className="mt-3 m-2 mt-8">
-            <Text
-              className={` ${
-                transactionDate
-                  ? 'mb-4 text-gray-500 font-medium'
-                  : 'font-semibold text-xl  text-gray-600 '
-              }`}
-            >
-              Transaction Date
-            </Text>
-            <TouchableOpacity onPress={() => setShowDatePicker(true)}>
-              <Text className="border-b border-b-gray-300 w-full  text-gray-600  text-xl font-semibold">
-                {transactionDate
-                  ? transactionDate.toLocaleDateString()
-                  : ''}
-              </Text>
-            </TouchableOpacity>
-            {showDatePicker && (
-              <DateTimePicker
-                value={transactionDate || new Date()}
-                mode="date"
-                display="default"
-                onChange={handleDateChange}
-              />
-            )}
-          </View>
+       <ClaimAmountInput amount={amount} handleAmount={handleAmount}/>
+       <ClaimTransactionDate  transactionDate={transactionDate} setShowDatePicker={setShowDatePicker} showDatePicker={showDatePicker} handleDateChange={handleDateChange}/>
         </View>
       </ScrollView>
-      <View className="bg-white w-full h-24 bottom-0 flex-row items-center justify-around p-4 ">
-        {selectedMerchantValue || selectedCurrencyValue || amount || transactionDate ? (
-          <Button
-            styles="bg-transparent  text-gray-400 border border-gray-400"
-            handlePress={handleDraft}
-          >
-            Save as draft
-          </Button>
-        ) : (
-          <Button
-            styles="bg-transparent  text-gray-500 border border-gray-400"
-            handlePress={handleCancel}
-          >
-            Cancel
-          </Button>
-        )}
-        <Button
-          styles=" text-white border border-blue-600  bg-blue-600"
-          handlePress={handleCreateClaim}
-          disabled={
-            !selectedMerchantValue || !selectedCurrencyValue || !amount || !transactionDate
-          }
-        >
-          Create Claim
-        </Button>
-      </View>
+     <CreateClaimFooter selectedMerchantValue={selectedMerchantValue} selectedCurrencyValue={selectedCurrencyValue} amount={amount} transactionDate={transactionDate} handleDraft={handleDraft} handleCancel={handleCancel} handleCreateClaim={handleCreateClaim}/>
     </SafeAreaView>
   );
 };

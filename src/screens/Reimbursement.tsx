@@ -14,7 +14,7 @@ const Reimbursement = () => {
         return claimsData?.length ? claimsData : [];
       });
       const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-    function handleSearchData(value){
+    function handleSearchData(value:string){
         setSearchValue(value);
         if(!value) {setClaims(claimsData);}
         else{
@@ -23,11 +23,11 @@ const Reimbursement = () => {
         }
     }
     function randomColor(){
-        const index=Math.floor(Math.random()*colorPallete.length);
+        const index=Math.floor(Math.random() * colorPallete.length);
          return `bg-[rgb(${colorPallete[index]})]`;
     }
-    function getFirstLetters(input) {
-      console.log("Input:",input)
+    function getFirstLetters(input:string) {
+  
         const words = input.trim().split(/\s+/);
         if (words.length < 2) {
             return words[0][0];

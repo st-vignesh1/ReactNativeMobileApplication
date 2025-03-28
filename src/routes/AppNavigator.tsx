@@ -23,7 +23,7 @@ const AppNavigator = () => {
           component={CreateClaim}
           options={{
             headerStyle: {
-              backgroundColor: " #f3f4f6", 
+              backgroundColor: "#f3f4f6", 
             }
           }}
         />
