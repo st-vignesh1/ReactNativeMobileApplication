@@ -91,7 +91,7 @@ const CreateClaim: React.FC = () => {
   const handleDraft = () => {
     if (selectedMerchantValue || selectedCurrencyValue || amount || transactionDate) {
       claimsData.unshift({
-        company: selectedMerchantValue || 'Unknown',
+        company: selectedMerchantValue?.toLocaleLowerCase() || 'Unknown',
         status: 'draft',
         currency: selectedCurrencyValue || 'Not Updated',
         amount: Number(amount) || 0,

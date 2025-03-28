@@ -1,5 +1,5 @@
-import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
+import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
+import React from 'react';
 
 const Receipt = ({imageUris,handleLaunchImageLibrary}) => {
   return (
@@ -35,6 +35,6 @@ const Receipt = ({imageUris,handleLaunchImageLibrary}) => {
             )}
           </View>
         </>
-        )
+  )
 }
 export default Receipt;

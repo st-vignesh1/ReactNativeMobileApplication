@@ -1,10 +1,10 @@
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity} from 'react-native';
 import React, { useState } from 'react';
-import { ScrollView } from 'react-native-gesture-handler';
+
 
 const DropDown = ({ data, selectedValue, setSelectedValue, dropDownName }) => {
 
-  console.log(selectedValue)
+
   const [isDropDownVisible, setIsDropDownVisible] = useState(false);
 
   function handleSelectValue(label) {
@@ -42,7 +42,6 @@ const DropDown = ({ data, selectedValue, setSelectedValue, dropDownName }) => {
               </TouchableOpacity>
             )}
           </View>
-          
           )}
         </View>
       )}

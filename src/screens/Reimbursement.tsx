@@ -18,7 +18,7 @@ const Reimbursement = () => {
         setSearchValue(value);
         if(!value) {setClaims(claimsData);}
         else{
-          console.log("Data : ",claimsData)
+
             setClaims(claimsData.filter(claim=>claim.company.startsWith(value.toLowerCase())));
         }
     }
