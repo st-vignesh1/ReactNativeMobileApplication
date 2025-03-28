@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
-  Image,
+
 } from 'react-native';
 import { launchImageLibrary, Asset } from 'react-native-image-picker';
 import DropDown from '../components/core/DropDown';
@@ -15,6 +15,7 @@ import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Button from '../components/core/Button';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import Receipt from '../components/Receipt';
 
 export interface Claim {
   company: string;
@@ -78,7 +79,7 @@ const CreateClaim: React.FC = () => {
       transactionDate
     ) {
       claimsData.unshift({
-        company: selectedMerchantValue,
+        company: selectedMerchantValue.toLowerCase(),
         status: 'approval pending',
         currency: selectedCurrencyValue,
         amount: Number(amount),
@@ -109,36 +110,7 @@ const CreateClaim: React.FC = () => {
     <SafeAreaView className="flex-1  bg-white">
       <ScrollView className="flex-1" nestedScrollEnabled>
         <View className="w-full min-h-fit p-6">
-          <Text className="mb-4 mt-10 font-semibold text-xl text-gray-600">Receipt(s)</Text>
-          <View className="bg-gray-100 w-full h-40 p-2 rounded-md border border-dashed border-gray-300 mb-4 flex overflow-x-scroll">
-            {imageUris.length >0 ? (
-              <ScrollView className="w-full" horizontal={true} contentContainerStyle={{justifyContent:'center',alignItems:"center",gap:10}}>
-                 { imageUris?.length<5 && <TouchableOpacity
-                    onPress={handleLaunchImageLibrary}
-                    className="w-12 h-12 bg-blue-500 border border-blue-500 rounded-full items-center justify-center"
-                  >
-                    <Text className="font-bold text-4xl text-white">+</Text>
-                  </TouchableOpacity>}
-                {imageUris.map((uri, index) => (
-                  <Image
-                    key={index}
-                    source={{ uri }}
-                    className="w-40 h-full rounded-md"
-                  />
-                ))}
-              </ScrollView>
-            ) : (
-              <TouchableOpacity
-                onPress={handleLaunchImageLibrary}
-                className="w-full flex justify-center items-center h-full"
-              >
-                <Text className="capitalize text-blue-700 underline mb-1">
-                  Upload Receipt
-                </Text>
-                <Text className="text-gray-600">PNG, JPG, PDF up to 5 MB</Text>
-              </TouchableOpacity>
-            )}
-          </View>
+          <Receipt imageUris={imageUris} handleLaunchImageLibrary={handleLaunchImageLibrary}/>
           <DropDown
             data={merchants}
             selectedValue={selectedMerchantValue}
