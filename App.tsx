@@ -1,13 +1,16 @@
 import { SafeAreaView} from 'react-native';
 import React from 'react';
 import './global.css';
-import Reimbursement from './src/pages/Reimbursement';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import AppNavigator from './src/routes/AppNavigator';
 
 const App = () => {
   return (
-    <SafeAreaView >
-      <Reimbursement/>
+      <GestureHandlerRootView>
+    <SafeAreaView   className="flex-1">
+     <AppNavigator/>
     </SafeAreaView>
+      </GestureHandlerRootView>
   );
 };
 export default App;
