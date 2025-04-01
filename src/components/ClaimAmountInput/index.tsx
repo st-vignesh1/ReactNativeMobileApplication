@@ -23,4 +23,4 @@ const ClaimAmountInput = ({amount,handleAmount}) => {
   )
 }
 
-export default ClaimAmountInput
+export default ClaimAmountInput;

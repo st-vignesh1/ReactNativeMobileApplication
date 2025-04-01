@@ -1,8 +1,8 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
-import  DateTimePicker  from '@react-native-community/datetimepicker'
+import  DateTimePicker  from '@react-native-community/datetimepicker';
 
-const ClaimTransactionDate = ({  transactionDate,setShowDatePicker,showDatePicker,handleDateChange}) => {
+const ClaimTransactionDate = ({  transactionDate,setShowDatePicker,showDatePicker,handleDateChange,textContent}) => {
   return (
     <View className="mt-3 m-2 mt-8">
     <Text
@@ -12,7 +12,7 @@ const ClaimTransactionDate = ({  transactionDate,setShowDatePicker,showDatePicke
           : 'font-semibold text-xl  text-gray-600 '
       }`}
     >
-      Transaction Date
+    {textContent}
     </Text>
     <TouchableOpacity onPress={() => setShowDatePicker(true)}>
       <Text className="border-b border-b-gray-300 w-full  text-gray-600  text-xl font-semibold">

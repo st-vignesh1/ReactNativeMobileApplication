@@ -19,7 +19,6 @@ export interface Claim {
   company: string;
   status: string;
   currency: string;
-  amount: number;
   date?: Date;
   receipt?: string[];
 }
@@ -93,8 +92,8 @@ const CreateClaim: React.FC = () => {
       claimsData.unshift({
         company: selectedMerchantValue?.toLocaleLowerCase() || 'Unknown',
         status: 'draft',
-        currency: selectedCurrencyValue || 'Not Updated',
-        amount: Number(amount) || 0,
+        currency: selectedCurrencyValue || '',
+        amount: Number(amount) || "-",
       });
       navigation.navigate('Reimbursement');
     }
@@ -122,12 +121,11 @@ const CreateClaim: React.FC = () => {
             dropDownName="Currency"
           />
        <ClaimAmountInput amount={amount} handleAmount={handleAmount}/>
-       <ClaimTransactionDate  transactionDate={transactionDate} setShowDatePicker={setShowDatePicker} showDatePicker={showDatePicker} handleDateChange={handleDateChange}/>
+       <ClaimTransactionDate  transactionDate={transactionDate} setShowDatePicker={setShowDatePicker} showDatePicker={showDatePicker} handleDateChange={handleDateChange} textContent="Transaction Date"/>
         </View>
       </ScrollView>
      <CreateClaimFooter selectedMerchantValue={selectedMerchantValue} selectedCurrencyValue={selectedCurrencyValue} amount={amount} transactionDate={transactionDate} handleDraft={handleDraft} handleCancel={handleCancel} handleCreateClaim={handleCreateClaim}/>
     </SafeAreaView>
   );
 };
-
 export default CreateClaim;

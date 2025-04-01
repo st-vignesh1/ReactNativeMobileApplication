@@ -1,6 +1,6 @@
 import { View, Text, SafeAreaView, FlatList, TouchableOpacity} from 'react-native';
 import React, { useState } from 'react';
-import Claims from '../components/core/Claims';
+import Claims from '../components/Claims';
 import { claimsData, colorPallete } from '../constants/claimsData';
 import SearchBar from '../components/core/SearchBar';
 import NoDataFound from '../components/core/NoData';
